@@ -9,7 +9,7 @@ function SignUp() {
       <div>
         <img
           className="App-image"
-          src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
+          src="https://images.squarespace-cdn.com/content/v1/5c055f98620b858a898bfcae/1553294659258-914E42360DZYV8Z1S6BL/carousel-blue.gif"
           alt="Registration"
         ></img>
       </div>
@@ -20,28 +20,67 @@ function SignUp() {
           <div className="signfont"> Sign UP</div>
         </div>
         <div className="First-las-div">
-          <div className="first">
+          <div className="first" noValidate>
             <label>First Name</label>
-            <TextField id="outlined-basic" size="small" variant="outlined" />
+            <TextField
+              id="outlined-basic"
+              size="small"
+              variant="outlined"
+              value={userData["firstname"]}
+              onChange={(event) =>
+                setUserData({ ...userData, firstname: event.target.value })
+              }
+            />
           </div>
           <div className="first">
             <label>Last Name</label>
-            <TextField id="outlined-basic" size="small" variant="outlined" />
+            <TextField
+              id="outlined-basic"
+              size="small"
+              variant="outlined"
+              value={userData["lastname"]}
+              onChange={(event) =>
+                setUserData({ ...userData, lastname: event.target.value })
+              }
+            />
           </div>
         </div>
         <div className="date-email-div">
           <div className="first">
             <label> Date of Birth</label>
-            <input type="date" className="date"></input>
+            <input
+              type="date"
+              className="date"
+              value={userData["dob"]}
+              onChange={(event) =>
+                setUserData({ ...userData, dob: event.target.value })
+              }
+            ></input>
           </div>
           <div className="first">
             <label> Email Address</label>
-            <TextField id="outlined-basic" size="small" variant="outlined" />
+            <TextField
+              id="outlined-basic"
+              size="small"
+              variant="outlined"
+              value={userData["email"]}
+              onChange={(event) =>
+                setUserData({ ...userData, email: event.target.value })
+              }
+            />
           </div>
         </div>
         <div className="addres-div">
           <label>Address</label>
-          <TextField id="outlined-basic" size="small" variant="outlined" />
+          <TextField
+            id="outlined-basic"
+            size="small"
+            variant="outlined"
+            value={userData["adress"]}
+            onChange={(event) =>
+              setUserData({ ...userData, adress: event.target.value })
+            }
+          />
         </div>
         <div className="btn-signup">
           <Button variant="contained" size="Medium" onClick={() => setStep(2)}>

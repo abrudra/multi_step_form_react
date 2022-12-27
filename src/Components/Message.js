@@ -1,66 +1,86 @@
-import { Button, TextField } from "@mui/material";
-import React, { useSate, useState } from "react";
+import {
+  Button,
+  TextField,
+  FormLabel,
+  FormControl,
+  FormControlLabel,
+  Radio,
+  RadioGroup,
+} from "@mui/material";
+import { multiStepContext } from "./StepContext";
+import React, { useContext } from "react";
 
 function Message() {
-    const [count, setCount] = useState(0);
+  let { setStep, userData, setUserData } = useContext(multiStepContext);
   return (
     <div className="App">
       <div>
-        {count === 1 ? (
-          <img
-            className="App-image"
-            src="https://images.unsplash.com/photo-1501504905252-473c47e087f8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=774&q=80"
-            alt="Registration"
-          />
-        ) : (
-          <img
-            className="App-image"
-            src="https://images.unsplash.com/photo-1521931961826-fe48677230a5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80"
-            alt="Registration"
-          />
-        )}
+        <img
+          className="App-image"
+          src="https://media.istockphoto.com/id/1354590729/photo/bubble-talk-or-comment-sign-symbol-on-blue-background.jpg?b=1&s=170667a&w=0&k=20&c=pje5u8wr4tVnuiBnXb6UoPreoio9Q-i4Wff-NHgOxrw="
+          alt="Registration"
+        ></img>
       </div>
       <div className="sign-up">
         <div className="stepper-div"></div>
         <div className="signup-div">
-          <div className="stepcount"> Step{count}/3</div>
-          <div className="signfont"> Sign UP</div>
+          <div className="stepcount"> Step2/3</div>
+          <div className="signfont"> Message</div>
         </div>
         <div className="First-las-div">
-          <div className="first">
-            <label>First Name</label>
-            <TextField id="outlined-basic" size="small" variant="outlined" />
-          </div>
-          <div className="first">
-            <label>Last Name</label>
-            <TextField id="outlined-basic" size="small" variant="outlined" />
-          </div>
-        </div>
-        <div className="date-email-div">
-          <div className="first">
-            <label> Date of Birth</label>
-            <input type="date" className="date"></input>
-          </div>
-          <div className="first">
-            <label> Email Address</label>
-            <TextField id="outlined-basic" size="small" variant="outlined" />
+          <div className="textfild">
+            <label>Message</label>
+            <TextField
+              id="outlined-multiline-static"
+              multiline
+              rows={4}
+              value={userData["message1"]}
+              onChange={(event) =>
+                setUserData({ ...userData, message1: event.target.value })
+              }
+            />
           </div>
         </div>
         <div className="addres-div">
-          <label>Address</label>
-          <TextField id="outlined-basic" size="small" variant="outlined" />
+          <FormControl>
+            <FormLabel id="demo-row-radio-buttons-group-label"></FormLabel>
+            <RadioGroup
+              row
+              aria-labelledby="demo-row-radio-buttons-group-label"
+              name="row-radio-buttons-group"
+              value={userData["choice"]}
+              onChange={(event) =>
+                setUserData({ ...userData, choice: event.target.value })
+              }
+            >
+              <FormControlLabel
+                value="one choice"
+                control={<Radio />}
+                label="The number one choice"
+              />
+              <FormControlLabel
+                value="two choice"
+                control={<Radio />}
+                label="The number two choice"
+              />
+            </RadioGroup>
+          </FormControl>
         </div>
         <div className="btn-signup">
           <Button
             variant="contained"
             size="Medium"
-            onClick={() => setCount(count + 1)}
+            className="back-btn"
+            onClick={() => setStep(1)}
+            style={{ color: "black", background: "white", border: "" }}
           >
+            Back
+          </Button>
+          <Button variant="contained" size="Medium" onClick={() => setStep(3)}>
             Next Step
           </Button>
         </div>
       </div>
-      <div className="sign-up"></div>
     </div>
   );
 }

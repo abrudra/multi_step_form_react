@@ -1,24 +1,22 @@
-import './App.css';
-import SignUp from './SignUp';
-import Message from './Message';
-import CheckBox from './CheckBox';
+import "./App.css";
+import SignUp from "./SignUp";
+import Message from "./Message";
+import CheckBox from "./CheckBox";
 import { Button, TextField } from "@mui/material";
 import React, { useContext, useState } from "react";
 import { Stepper, StepLabel, Step } from "@mui/material";
-import { multiStepContext } from './StepContext';
-
+import { multiStepContext } from "./StepContext";
 
 function App() {
   let { currentStep, finalData } = useContext(multiStepContext);
-  function showStep(step){
+  function showStep(step) {
     switch (step) {
       case 1:
-        return <SignUp />
+        return <SignUp />;
       case 2:
-        return <Message />
+        return <Message />;
       case 3:
-        return <CheckBox />
-     
+        return <CheckBox />;
     }
   }
   return (

@@ -7,13 +7,46 @@ import {
   RadioGroup,
 } from "@mui/material";
 import { multiStepContext } from "./StepContext";
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 
 function CheckBox() {
   let { setStep, userData, setUserData, submitData } =
     useContext(multiStepContext);
+  const [inputValues, setInputValue] = useState({
+    checkbox1: "",
+  });
+
+  const [validation, setValidation] = useState({
+    checkbox1: "",
+  });
+
+  //handle submit updates
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setInputValue({ ...inputValues, [name]: value });
+  }
+
+  const checkValidation = () => {
+    let errors = validation;
+
+    //first Name validation
+    if (inputValues.checkbox1.trim()) {
+      errors.checkbox1 = "";
+    } else {
+      errors.checkbox1 = "Check one of the box.";
+    }
+    setValidation(errors);
+  };
+
+  useEffect(() => {
+    checkValidation();
+  }, [inputValues]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
   return (
-    <div className="App">
+    <form onSubmit={handleSubmit} className="App">
       <div>
         <img
           className="App-image"
@@ -42,11 +75,12 @@ function CheckBox() {
             <FormLabel id="demo-row-radio-buttons-group-label"></FormLabel>
             <RadioGroup
               aria-labelledby="demo-row-radio-buttons-group-label"
-              name="row-radio-buttons-group"
+              name="checkbox1"
               value={userData["choicecheck"]}
               onChange={(event) =>
                 setUserData({ ...userData, choicecheck: event.target.value })
               }
+              onBlur={(e) => handleChange(e)}
             >
               <FormControlLabel
                 value="one choice"
@@ -59,6 +93,9 @@ function CheckBox() {
                 label="Let me Click on this checkbox and choose some cool stuf"
               />
             </RadioGroup>
+            {validation.checkbox1 && (
+              <p style={{ color: "red" }}>{validation.checkbox1}</p>
+            )}
           </FormControl>
         </div>
         <div className="btn-signup">
@@ -70,12 +107,20 @@ function CheckBox() {
           >
             Back
           </Button>
-          <Button variant="contained" size="Medium" onClick={submitData}>
+          <Button
+            variant="contained"
+            size="Medium"
+            onClick={() => {
+              if (userData.choicecheck) {
+                submitData();
+              }
+            }}
+          >
             Submit
           </Button>
         </div>
       </div>
-    </div>
+    </form>
   );
 }
 

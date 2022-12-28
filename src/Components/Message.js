@@ -7,13 +7,54 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/material";
+import { useContext, useState, useEffect } from "react";
 import { multiStepContext } from "./StepContext";
-import React, { useContext } from "react";
 
 function Message() {
   let { setStep, userData, setUserData } = useContext(multiStepContext);
+  const [inputValues, setInputValue] = useState({
+    message: "",
+    radio: "",
+  });
+
+  const [validation, setValidation] = useState({
+    message: "",
+    radio: "",
+  });
+
+  //handle submit updates
+  function handleChange(event) {
+    const { name, value } = event.target;
+    setInputValue({ ...inputValues, [name]: value });
+  }
+
+  const checkValidation = () => {
+    let errors = validation;
+
+    //first Name validation
+    if (inputValues.message.trim()) {
+      errors.message = "";
+    } else {
+      errors.message = "Message is required";
+    }
+    //last Name validation
+    if (inputValues.radio.trim()) {
+      errors.radio = "";
+    } else {
+      errors.radio = "select any one required";
+    }
+    setValidation(errors);
+  };
+  useEffect(() => {
+    checkValidation();
+  }, [inputValues]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
   return (
-    <div className="App">
+    <form onSubmit={handleSubmit} className="App">
       <div>
         <img
           className="App-image"
@@ -34,11 +75,16 @@ function Message() {
               id="outlined-multiline-static"
               multiline
               rows={4}
+              name="message"
               value={userData["message1"]}
               onChange={(event) =>
                 setUserData({ ...userData, message1: event.target.value })
               }
+              onBlur={(e) => handleChange(e)}
             />
+            {validation.message && (
+              <p style={{ color: "red" }}>{validation.message}</p>
+            )}
           </div>
         </div>
         <div className="addres-div">
@@ -47,11 +93,12 @@ function Message() {
             <RadioGroup
               row
               aria-labelledby="demo-row-radio-buttons-group-label"
-              name="row-radio-buttons-group"
+              name="radio"
               value={userData["choice"]}
               onChange={(event) =>
                 setUserData({ ...userData, choice: event.target.value })
               }
+              onBlur={(e) => handleChange(e)}
             >
               <FormControlLabel
                 value="one choice"
@@ -64,6 +111,9 @@ function Message() {
                 label="The number two choice"
               />
             </RadioGroup>
+            {validation.radio && (
+              <p style={{ color: "red" }}>{validation.radio}</p>
+            )}
           </FormControl>
         </div>
         <div className="btn-signup">
@@ -76,12 +126,21 @@ function Message() {
           >
             Back
           </Button>
-          <Button variant="contained" size="Medium" onClick={() => setStep(3)}>
+          <Button
+            type="submit"
+            variant="contained"
+            size="Medium"
+            onClick={() => {
+              if (userData.message1 && userData.choice) {
+                setStep(3);
+              }
+            }}
+          >
             Next Step
           </Button>
         </div>
       </div>
-    </div>
+    </form>
   );
 }
 

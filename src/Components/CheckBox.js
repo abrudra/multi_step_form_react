@@ -110,9 +110,11 @@ function CheckBox() {
           <Button
             variant="contained"
             size="Medium"
-            onClick={() => {
+            onClick={(e) => {
               if (userData.choicecheck) {
                 submitData();
+              } else {
+                handleChange(e);
               }
             }}
           >

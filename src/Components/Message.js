@@ -68,7 +68,7 @@ function Message() {
           <div className="stepcount"> Step2/3</div>
           <div className="signfont"> Message</div>
         </div>
-        <div className="First-las-div">
+        <div className="message-div">
           <div className="textfild">
             <label>Message</label>
             <TextField
@@ -87,7 +87,7 @@ function Message() {
             )}
           </div>
         </div>
-        <div className="addres-div">
+        <div className="radio-div">
           <FormControl>
             <FormLabel id="demo-row-radio-buttons-group-label"></FormLabel>
             <RadioGroup
@@ -130,9 +130,11 @@ function Message() {
             type="submit"
             variant="contained"
             size="Medium"
-            onClick={() => {
+            onClick={(e) => {
               if (userData.message1 && userData.choice) {
                 setStep(3);
+              } else {
+                handleChange(e);
               }
             }}
           >

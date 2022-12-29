@@ -123,7 +123,7 @@ function SignUp() {
               }
               onBlur={(e) => handleChange(e)}
             />
-            {validation.fName && (
+            {validation.lName && (
               <p style={{ color: "red" }}>{validation.lName}</p>
             )}
           </div>
@@ -141,9 +141,7 @@ function SignUp() {
               }
               onBlur={(e) => handleChange(e)}
             />
-            {validation.fName && (
-              <p style={{ color: "red" }}>{validation.dob}</p>
-            )}
+            {validation.dob && <p style={{ color: "red" }}>{validation.dob}</p>}
           </div>
           <div className="first">
             <label> Email Address</label>
@@ -158,7 +156,7 @@ function SignUp() {
               }
               onBlur={(e) => handleChange(e)}
             />
-            {validation.fName && (
+            {validation.email && (
               <p style={{ color: "red" }}>{validation.email}</p>
             )}
           </div>
@@ -185,7 +183,7 @@ function SignUp() {
             variant="contained"
             type="button"
             size="Medium"
-            onClick={() => {
+            onClick={(e) => {
               if (
                 userData.firstname &&
                 userData.adress &&
@@ -194,7 +192,8 @@ function SignUp() {
                 userData.lastname
               ) {
                 setStep(2);
-                //  handleChange(e);
+              } else {
+                handleChange(e);
               }
             }}
           >
